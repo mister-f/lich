@@ -12,7 +12,8 @@ var path = require('path');
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var session = require('express-session');
 var app = express();
-var PORT = process.env.PORT || 5000;
+var userType = 1;
+var PORT = process.env.PORT || 30000;
 
 var connection = mysql.createConnection({
 	host : process.env.RDS_HOSTNAME,
@@ -48,14 +49,24 @@ app.get('/', function(req, res) {
 });
 
 app.post('/auth', function(req, res) {
-	var username = req.body.username;
-	var password = req.body.password;
+	var username = req.body.uname;
+	var password = req.body.psw;
 	if (username && password) {
 		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
+				user = JSON.parse(JSON.stringify(results));
 				req.session.loggedin = true;
 				req.session.username = username;
-				res.redirect('/cool');
+				//console.log(user[0].type);
+				if (user[0].type == 1) {
+					userType = 1;
+					res.redirect('/user');
+				} else if (user[0].type == 0) {
+					userType = 0;
+					res.redirect('/admin');
+				} else {
+					res.send('Login error! Please try again!');
+				}
 			} else {
 				res.send('Incorrect Username and/or Password!');
 			}			
@@ -67,13 +78,107 @@ app.post('/auth', function(req, res) {
 	}
 });
 
-app.get('/cool', function(req, res) {
-	if (req.session.loggedin) {
-		res.send(cool());
+app.get('/user', function(req, res) {
+	if (req.session.loggedin && userType == 1) {
+		var context = {};
+		return res.render('user', context);
 	} else {
 		res.send('Please login to view this page!');
 	}
 	res.end();
+});
+
+app.get('/award', function(req, res) {
+        if (req.session.loggedin && userType == 1) {
+                var context = {};
+                return res.render('award', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/awardhist', function(req, res) {
+        if (req.session.loggedin && userType == 1) {
+                var context = {};
+                return res.render('awardHist', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/admin', function(req, res) {
+        if (req.session.loggedin && userType == 0) {
+                var context = {};
+                return res.render('admin', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/adduser', function(req, res) {
+        if (req.session.loggedin && userType == 0) {
+                var context = {};
+                return res.render('addUser', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/addadmin', function(req, res) {
+        if (req.session.loggedin && userType == 0) {
+                var context = {};
+                return res.render('addAdmin', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/reports', function(req, res) {
+        if (req.session.loggedin && userType == 0) {
+                var context = {};
+                return res.render('reports', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/addnewuser', function(req, res) {
+        if (req.session.loggedin && userType == 0) {
+                var context = {};
+                return res.render('addNewUser', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/addnewadmin', function(req, res) {
+        if (req.session.loggedin && userType == 0) {
+                var context = {};
+                return res.render('addNewAdmin', context);
+        } else {
+                res.send('Please login to view this page!');
+        }
+        res.end();
+});
+
+app.get('/logout', function(req, res, next) {
+	if (req.session) {
+		// delete session object
+		req.session.destroy(function(err) {
+			if(err) {
+				return next(err);
+			} else {
+				return res.redirect('/');
+			}
+		});
+	}
 });
 
 app.listen(PORT, function() {
