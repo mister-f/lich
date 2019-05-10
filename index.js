@@ -91,21 +91,39 @@ app.get('/user', function(req, res) {
 app.get('/award', function(req, res) {
         if (req.session.loggedin && userType == 1) {
                 var context = {};
-                return res.render('award', context);
+                res.render('award', context); 
+                connection.query('insert into awards (winnerName, winnerLastName, createdBy, dateCreated, dateGiven) values (?,?,"do","2019-12-07","2019-12-07")', [req.body.firstname, req.body.lastname], function(error, results, fields){
+                	if(error){
+					next(error);
+					return;
+				}
+				res.redirect('/awardHist'); 
+     		
+     	});
         } else {
                 res.send('Please login to view this page!');
+                res.end();
         }
-        res.end();
 });
 
-app.get('/awardhist', function(req, res) {
+app.get('/awardhist', function(req, res, next) {
         if (req.session.loggedin && userType == 1) {
                 var context = {};
-                return res.render('awardHist', context);
+                connection.query('SELECT * FROM awards', function(error, results, fields){
+				if(error){
+					next(error);
+					return;
+				}
+				context.awards = results;
+				res.render('awardHist', context);  
+     		
+     	});
+            
         } else {
                 res.send('Please login to view this page!');
-        }
+        
         res.end();
+    }
 });
 
 app.get('/admin', function(req, res) {
