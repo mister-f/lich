@@ -88,16 +88,18 @@ app.get('/user', function(req, res) {
 	res.end();
 });
 
-app.get('/award', function(req, res) {
+app.get('/award', function(req, res, next) {
         if (req.session.loggedin && userType == 1) {
                 var context = {};
                 res.render('award', context); 
-                connection.query('insert into awards (winnerName, winnerLastName, createdBy, dateCreated, dateGiven) values (?,?,"do","2019-12-07","2019-12-07")', [req.body.firstname, req.body.lastname], function(error, results, fields){
+                connection.query("insert into awards (`winnerName`, `winnerLastName`, `createdBy`, `dateCreated`, `dateGiven`) values (?,?,'do','2019-12-07','2019-12-07')", [req.query.firstname, req.query.lastname], function(error, results){
                 	if(error){
 					next(error);
 					return;
 				}
-				res.redirect('/awardHist'); 
+				else{
+					res.send="Award winner has been added";
+				}
      		
      	});
         } else {
