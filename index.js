@@ -88,7 +88,7 @@ app.get('/user', function(req, res) {
 	res.end();
 });
 
-app.get('/award', function(req, res) {
+app.get('/award', function(req, res, next) {
         if (req.session.loggedin && userType == 1) {
                 var context = {};
                 res.render('award', context); 
