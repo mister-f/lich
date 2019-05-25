@@ -1,0 +1,26 @@
+<nav class="topnav">
+	<a href="/" > Home</a>
+	<a href="/employees/create" > Create Users</a>
+	<a href="/employees" > View Employees</a>
+	<a href="/logout" id="logout">Logout</a>
+</nav>
+
+<h2 id="createUser">Create A User</h2>
+<div>
+  <form id="create-user-form">
+    Username (email): <br>
+     <input type="text" name="email" value="" placeholder="Enter Email Address"><br>
+    Last Name: <br>
+    <input type="text" name="last_name" value="" placeholder="Enter Last Name"><br>
+    First Name: <br>
+     <input type="text" name="first_name" value="" placeholder="Enter First Name"></input><br>
+    Password: <br>
+    <input type="text" name="password" value="" placeholder="Create Password"><br>
+    User Type: <br><br>
+    <select name="type">
+      <option  value="1">User</option>
+      <option  value="0">Admin</option>
+    </select><br>
+    <button id="create-form-btn" type="button" name="button"> Submit </button>
+  </form>
+</div>

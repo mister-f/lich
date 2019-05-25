@@ -1,0 +1,34 @@
+<nav class="topnav">
+  <a href="/homeUser" > Home</a>
+  <a href="/awards/create" > Give Award</a>
+  <a href="/awards" > Award History</a>
+  <a href="/logout" id="logout">Logout</a>
+</nav>
+
+
+<div>
+  <table>
+    <thead>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Created By</th>
+      <th>Date Created</th>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td id="tableVal"class="id">{{id}}</td>
+        <td id="tableVal" class="type">{{type}}</td>
+        <td id="tableVal" class="last_name">{{last_name}}</td>
+        <td id="tableVal" class="first_name">{{first_name}}</td>
+        <td id="tableVal" class="created_by">{{created_by}}</td>
+        <td id="tableVal" class="created_on">{{created_on}}</td>
+        <td id="tablebuttons"><button type="button" class="edit-btn2" name="button"> Edit </button></td>
+        <td id="tablebuttons"><button type="button" class="delete-btn2" name="button"> Delete </button></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

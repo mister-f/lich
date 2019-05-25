@@ -65,7 +65,8 @@ form {
 	border: 3px solid #f1f1f1;
 	margin: 20px;
 	margin-left:20%;
-	margin-right: 20%; 
+	margin-right: 20%;
+	padding: 20px; 
 	text-align: center;
 }
 
@@ -119,4 +120,83 @@ input[type=text], input[type=password] {
 
 #logout:hover{
 	background-color: red;
+}
+th, #tableVal{
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+tr:nth-child(even){
+	background-color:lightblue;
+}
+
+th{
+	padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: green;
+  color: white;
+}
+.delete-btn2, .delete-btn {
+	background-color: red;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+}
+
+.delete-btn2:hover, .delete-btn:hover{
+background-color: darkred;
+	color: black;
+}
+.edit-btn2, .edit-btn{
+background-color: blue;
+color: white;
+padding: 15px 42px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.edit-btn2:hover, .edit-btn:hover{
+	background-color: darkblue;
+	color: black;
+}
+#tablebuttons{
+	background-color: white;
+}
+table{
+	margin-right: auto;
+	margin-left: auto;
+	padding: 40px;
+}
+#create-form2-btn, #edit-form2-btn, #create-form-btn, #edit-form-btn{
+	background-color: blue;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+select{
+	display: block;
+	font-size: 12px;
+	width: 50%;
+	margin-left: 25%;
+	margin-right: 25%;
+
+}
+
+ul, #createUser{
+	text-align: center;
 }
