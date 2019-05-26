@@ -1,0 +1,26 @@
+
+<nav class="topnav">
+	<a href="/homeUser" > Home</a>
+	<a href="/awards/create" > Give Award</a>
+	<a href="/awards" > Award History</a>
+	<a href="/logout" id="logout">Logout</a>
+</nav>
+<ul>
+  <h4>Editing User ID:</h4><div class="id" >{{data.0.id}}<div>
+  
+  
+  
+</ul>
+<br>
+<form id="edit-award-form">
+  Award: <br><br>
+   <select name="type" placeholder="{{data.0.type}}">
+      <option  value="Employee of the Month">Employee of the Month</option>
+      <option  value="Employee of the Week">Employee of the Week</option>
+    </select><br>
+  
+  Last Name: <br> <input type="text" name="last_name" value="" placeholder="{{data.0.last_name}}"><br>
+  First Name: <br><input type="text" name="first_name" value="" placeholder="{{data.0.first_name}}"><br>
+ Created By: <br> <input type="text" name="created_by" value="" placeholder="{{data.0.created_by}}"><br>
+  <button id="edit-form2-btn" type="button" class="btn btn-dark" name="button"> Submit </button>
+</form>
