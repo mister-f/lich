@@ -90,6 +90,7 @@ app.post('/forgot', function(req, res, next) {
 					});
 				} else {
 					console.log('Invalid email entered.');
+					return res.redirect('/forgot');
 				}
 
       			});
@@ -97,8 +98,8 @@ app.post('/forgot', function(req, res, next) {
 		function(token, email, done) {
 			const transporter = nodemailer.createTransport(sgTransport({
 				auth: {
-					api_user: 'funkand@oregonstate.edu',
-					api_key: '#2XkT5#UTVW3hx%8ce'
+					api_user: process.env.SG_USER,
+					api_key: process.env.SG_KEY
 				},
 			}));
 			const options = {
@@ -160,8 +161,8 @@ app.post('/reset/:token', function(req, res) {
                 function(email, done) {
                         const transporter = nodemailer.createTransport(sgTransport({
                                 auth: {
-                                        api_user: 'funkand@oregonstate.edu',
-                                        api_key: '#2XkT5#UTVW3hx%8ce'
+                                        api_user: process.env.SG_USER,
+                                        api_key: process.env.SG_KEY
                                 },
                         }));
                         const options = {
