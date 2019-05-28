@@ -46,11 +46,11 @@ app.post('/auth', function(req, res) {
 				if (user[0].type == 1) {
 					//userType = 1;
 					//res.send('user!');
-					res.redirect('/');
+					res.redirect('/homeUser');
 					} else if (user[0].type == 0) {
 					userType = 0;
 					//res.send('admin!');
-					res.redirect('/');
+					res.redirect('/homeAdmin');
 				} else {
 					res.send('Login error! Please try again!');
 				}
