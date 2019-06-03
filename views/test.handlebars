@@ -1,0 +1,50 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<script type="text/javascript">
+  google.charts.load('current', {
+    'packages': ['controls', 'corechart']
+  });
+
+  google.charts.setOnLoadCallback(drawChart);
+
+  function formatData(data) {
+
+    var result = [];
+    for (var i = 0; i < data.length; i++) {
+      var pair = [data[i].first_name, data[i].id];
+      result.push(pair);
+    }
+    return result;
+  }
+
+  function drawChart() {
+    var data = $.ajax({
+      type: 'GET',
+      url: '/reports',
+      async: false
+    }).responseJSON;
+
+    var newData = formatData(data);
+    console.log(typeof(newData));
+    console.log(newData);
+    var dataTable = new google.visualization.DataTable();
+    dataTable.addColumn('string', 'Created By');
+    dataTable.addColumn('number', 'Value');
+    dataTable.addRows(newData);
+
+    // Set chart options
+    var options = {'title':'My title',
+                   'width':400,
+                   'height':300};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart-div'));
+    chart.draw(dataTable, options);
+  }
+
+</script>
+
+<div id="test-div" class="">
+
+</div>

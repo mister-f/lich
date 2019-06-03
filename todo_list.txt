@@ -1,0 +1,12 @@
+Eric -
+- Implement page to display "Invalid username/password!"
+- Ensure that only awards given by specific user are available to the logged in user
+- Example Business Intelligence Reports:
+	- Number of awards created by each user (horizontal bar graph)
+	- Number of awards received by each user (horizontal bar graph)
+
+Andrew -
+- email PDF functionality
+
+Arman -
+- export business logic as CSV

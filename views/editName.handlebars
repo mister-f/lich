@@ -1,0 +1,17 @@
+<nav class="topnav">
+  <a href="/">Home</a>
+  <a href="/awards/create">Give Award</a>
+  <a href="/awards">Award History</a>
+  <a href="/user">Change Name</a>
+  <a href="/logout" id="logout">Logout</a>
+</nav>
+<br>
+<h2 id="createUser">Editing User: {{user.email}}</h2>
+<br>
+
+<form id="edit-name-form" method="post" enctype="multipart/form-data">
+  Last Name: <br> <input type="text" name="last_name" value=""><br>
+  First Name: <br><input type="text" name="first_name" value=""><br>
+  <input type="hidden" class="eid" name="id" value="{{user.id}}">
+  <input type="submit" name="" value="Submit">
+</form>

@@ -1,0 +1,31 @@
+<nav class="topnav">
+  <a href="/">Reports</a>
+  <a href="/employees">Manage Employees</a>
+  <a href="/logout" id="logout">Logout</a>
+</nav>
+
+<h2 id="createUser">Create A User</h2>
+<div id="create-user-div">
+  <form id="create-user-form" method="post" enctype="multipart/form-data">
+    Username (email): <br>
+    <input type="text" name="email" value="" placeholder="Enter Email Address"><br>
+    First Name: <br>
+    <input type="text" name="first_name" value="" placeholder="Enter First Name"></input><br>
+    Last Name: <br>
+    <input type="text" name="last_name" value="" placeholder="Enter Last Name"><br>
+    Password: <br>
+    <input type="password" name="password" value="" placeholder="Create Password"><br>
+    User Type: <br><br>
+    <select id="select-user-type" name="user_type">
+      <option value="0">User</option>
+      <option value="1">Admin</option>
+    </select><br>
+
+    <div id="user-sig">
+      Upload User Signature: <br><br>
+      <input type="file" name="user_sig" accept="image/*"><br><br>
+    </div>
+
+    <input id="create-form-btn" type="submit" value="Submit">
+  </form>
+</div>

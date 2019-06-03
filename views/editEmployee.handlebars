@@ -1,0 +1,23 @@
+<nav class="topnav">
+  <a href="/">Reports</a>
+  <a href="/employees">Manage Employees</a>
+  <a href="/logout" id="logout">Logout</a>
+</nav>
+<br>
+<h2 id="createUser">Editing User:</h2>
+<ul>
+  <li class="eid">{{data.0.id}}</li>
+
+</ul>
+
+<form id="edit-user-form">
+  Username:<br>
+   <input type="text" name="email" value="" placeholder="{{data.0.email}}"><br>
+  Last Name: <br> <input type="text" name="last_name" value="" placeholder="{{data.0.last_name}}"><br>
+  First Name: <br><input type="text" name="first_name" value="" placeholder="{{data.0.first_name}}"><br>
+  User Type: <br><select name="user_type">
+      <option  value="0">User</option>
+      <option  value="1">Admin</option>
+    </select><br>
+  <button id="edit-form-btn" type="button" class="btn btn-dark" name="button"> Submit </button>
+</form>

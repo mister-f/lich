@@ -1,0 +1,38 @@
+<nav class="topnav">
+  <a href="/">Reports</a>
+  <a href="/employees">Manage Employees</a>
+  <a href="/logout" id="logout">Logout</a>
+</nav>
+
+<div>
+  <button type="button" class="btn btn-dark create-btn" name="button"> Create A User </button>
+</div>
+<div>
+  <table>
+    <thead>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Password</th>
+      <th>User Type</th>
+      <th>Date Created</th>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td id="tableVal" class="eid">{{id}}</td>
+        <td id="tableVal" class="email">{{email}}</td>
+        <td id="tableVal" class="last_name">{{last_name}}</td>
+        <td id="tableVal" class="first_name">{{first_name}}</td>
+        <td id="tableVal" class="password">{{password}}</td>
+        <td id="tableVal" class="type">{{user_type}}</td>
+        <td id="tableVal" class="created_on">{{created_on}}</td>
+        <td>{{date}}</td>
+        <td id="tablebuttons"><button type="button" class="btn btn-secondary edit-btn" name="button"> Edit </button></td>
+        <td id="tablebuttons"><button type="button" class="btn btn-secondary delete-btn" name="button"> Delete </button></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

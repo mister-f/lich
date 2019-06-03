@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+	<a class="navbar-brand" href="/">CS 467 - Employee Recognition Portal</a>
+	<a href="/awards/create" > Give Award</a>
+	<a href="/awards" > Award History</a>
+	<a href="/logout" id="logout">Logout</a>
+</nav>
+<div>
+  <form id="create-award-form" method="post" enctype="multipart/form-data">
+    Award:<br><br>
+    <select name="type">
+      <option  value="Employee of the Month">Employee of the Month</option>
+      <option  value="Employee of the Week">Employee of the Week</option>
+    </select><br>
+		First Name:<br>
+		 <input type="text" name="first_name" value="" placeholder="Enter First Name"></input><br>
+    Last Name:<br>
+     <input type="text" name="last_name" value="" placeholder="Enter Last Name"><br>
+    Award Date: <br>
+     <input type="text" name="award_date" value=""><br>
+		 <input type="submit" name="" value="Submit">
+  </form>
+</div>
