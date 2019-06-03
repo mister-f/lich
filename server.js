@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}, bodyParser.json()));
 
 // Create the session object
 app.use(session({
-  secret: 'secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -81,6 +81,7 @@ app.get('/logout', (req, res, next) => {
 app.use('/awards', require('./routes/awards'));
 app.use('/employees', require('./routes/employees'));
 app.use('/recover', require('./routes/recover'));
+app.use('/reset', require('./routes/reset'));
 app.use('/user', require('./routes/user'));
 
 // Error handling

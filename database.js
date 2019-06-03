@@ -5,9 +5,9 @@ const util = require('util');
 
 //Create DB connection
 const pool = mysql.createPool({
-  host: 'lichdev.c7pwkereld54.us-east-2.rds.amazonaws.com',
-  user: 'passe',
-  password: 'temppassword',
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
   database: 'test_db',
   connectionLimit: 10,
   waitForConnections: true

@@ -1,0 +1,48 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{pdflscape}
+\usepackage{fancybox}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{titlepage}
+\begin{landscape}
+\begin{center}
+
+\thisfancyput(3.25in,-4.5in){%
+	\setlength{\unitlength}{1in}\fancyoval(7,9.5)}
+
+\huge\textbf{This certificate is awarded to:}
+
+\medskip
+
+\Huge\textbf{\awardee}
+
+\bigskip
+
+\huge\textbf{to recognize them for the accomplishment of:}
+
+\medskip
+
+\Huge\textbf{\awardType}
+
+\bigskip
+
+\huge\textbf{on the following date:}
+
+\medskip
+
+\Huge\textbf{\awardDate}
+
+\vfill
+
+\includegraphics[width=6cm]{\imageFile}
+
+\underline{\hspace{6cm}}\\
+\smallskip
+\large\textbf{Signed by \givenBy}
+
+\end{center}
+\end{landscape}
+\end{titlepage}
+\end{document}
