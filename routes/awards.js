@@ -22,8 +22,8 @@ function get_single_award(id, callback) {
 }
 
 function create_award(body, id, callback) {
-  if (body.hasOwnProperty('type') && body.hasOwnProperty('last_name') && body.hasOwnProperty('first_name') && body.hasOwnProperty('award_date')) {
-    if (body.type == null || body.last_name == null || body.first_name == null || body.award_date == null) {
+  if (body.hasOwnProperty('type') && body.hasOwnProperty('last_name') && body.hasOwnProperty('first_name') && body.hasOwnProperty('award_date') && body.hasOwnProperty('email')) {
+    if (body.type == null || body.last_name == null || body.first_name == null || body.award_date == null || body.email == null) {
       let error = new Error('Missing required field data...');
       throw error;
     }
@@ -32,8 +32,8 @@ function create_award(body, id, callback) {
     throw error;
   }
 
-  var sql = 'INSERT INTO awards (type, last_name, first_name, created_by, award_date) VALUES (?, ?, ?, ?, ?)';
-  var values = [body.type, body.last_name, body.first_name, id, body.award_date];
+  var sql = 'INSERT INTO awards (type, last_name, first_name, email, created_by, award_date) VALUES (?, ?, ?, ?, ?, ?)';
+  var values = [body.type, body.last_name, body.first_name, body.email, id, body.award_date];
   pool.query(sql, values, function(error, results, fields) {
     callback(results);
   });
