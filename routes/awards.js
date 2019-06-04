@@ -117,7 +117,7 @@ function send_award(callback) {
 					'\\medskip\n\n' +
 					'\\Huge\\textbf{' + awardDate + '}\n\n' +
 					'\\vfill\n\n' +
-					'\\includegraphics[width=6cm]{' + imageFile + '}\n\n' +
+			//		'\\includegraphics[width=6cm]{' + imageFile + '}\n\n' +
 					'\\underline{\\hspace{6cm}}\\\\\n' +
 					'\\smallskip\n' +
 					'\\large\\textbf{Signed by ' + givenBy + '}\n\n' +
