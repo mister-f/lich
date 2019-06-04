@@ -97,14 +97,14 @@ function send_award(callback) {
 			fs.writeFile('./texpdf/options.tex', '\\documentclass[12pt,a4paper]{article}\n' +
 					'\\usepackage[utf8]{inputenc}\n' +
 					'\\usepackage{pdflscape}\n' +
-					'\\usepackage{fancybox}\n' +
+				//	'\\usepackage{fancybox}\n' +
 					'\\usepackage{graphicx}\n\n' +
 					'\\begin{document}\n' +
 					'\\begin{titlepage}\n' +
 					'\\begin{landscape}\n' +
 					'\\begin{center}\n\n' +
-					'\\thisfancyput(3.25in,-4.5in){%\n' +
-					'	\\setlength{\\unitlength}{1in}\\fancyoval(7,9.5)}\n\n' +
+				//	'\\thisfancyput(3.25in,-4.5in){%\n' +
+				//	'	\\setlength{\\unitlength}{1in}\\fancyoval(7,9.5)}\n\n' +
 					'\\huge\\textbf{This certificate is awarded to:}\n\n' +
 					'\\medskip\n\n' +
 					'\\Huge\\textbf{' + awardee + '}\n\n' +
