@@ -95,7 +95,7 @@ function send_award(callback) {
                         s3.getObject(options).createReadStream().pipe(file);
 
 			var imgPath = path.join(__dirname, 'texpdf');
-			console.log('imgPath');
+			console.log(imgPath);
 			fs.writeFile('./texpdf/options.tex', '\\documentclass[12pt,a4paper]{article}\n' +
 					'\\usepackage[utf8]{inputenc}\n' +
 					'\\usepackage{pdflscape}\n' +
