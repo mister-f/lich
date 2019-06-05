@@ -93,12 +93,14 @@ function send_award(callback) {
                         //save signature file;
                         var file = fs.createWriteStream('./texpdf/' + imageFile);
                         s3.getObject(options).createReadStream().pipe(file);
- 
+
+			var imgPath = path.join(__dirname, 'texpdf');
 			fs.writeFile('./texpdf/options.tex', '\\documentclass[12pt,a4paper]{article}\n' +
 					'\\usepackage[utf8]{inputenc}\n' +
 					'\\usepackage{pdflscape}\n' +
 				//	'\\usepackage{fancybox}\n' +
 					'\\usepackage{graphicx}\n\n' +
+					'\\graphicspath{{' + imgPath + '}}' +
 					'\\begin{document}\n' +
 					'\\begin{titlepage}\n' +
 					'\\begin{landscape}\n' +
@@ -135,11 +137,8 @@ function send_award(callback) {
 		function(imageFile, email, done) {
 		
                         const input = fs.createReadStream('./texpdf/options.tex')
-                        const imgInput = fs.createReadStream('./texpdf/' + imageFile)
 			const output = fs.createWriteStream('./texpdf/certificate.pdf')
-                        const pdf = latex(input, {
-				inputs: imgInput
-			});
+                        const pdf = latex(input);
 
                         pdf.pipe(output)
                         pdf.on('error', err => console.error(err))
