@@ -117,7 +117,7 @@ function send_award(callback) {
 					'\\medskip\n\n' +
 					'\\Huge\\textbf{' + awardDate + '}\n\n' +
 					'\\vfill\n\n' +
-			//		'\\includegraphics[width=6cm]{' + imageFile + '}\n\n' +
+					'\\includegraphics[width=6cm]{' + imageFile + '}\n\n' +
 					'\\underline{\\hspace{6cm}}\\\\\n' +
 					'\\smallskip\n' +
 					'\\large\\textbf{Signed by ' + givenBy + '}\n\n' +
@@ -135,9 +135,10 @@ function send_award(callback) {
 		function(imageFile, email, done) {
 		
                         const input = fs.createReadStream('./texpdf/options.tex')
-                        const output = fs.createWriteStream('./texpdf/certificate.pdf')
+                        const imgInput = fs.createReadStream('./texpdf/' + imageFile)
+			const output = fs.createWriteStream('./texpdf/certificate.pdf')
                         const pdf = latex(input, {
-				inputs: './texpdf/',
+				inputs: imgInput
 			});
 
                         pdf.pipe(output)
