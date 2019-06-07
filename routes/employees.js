@@ -87,6 +87,12 @@ function delete_employee(id, callback) {
   });
 }
 
+function get_reports(callback) {
+  var sql = 'select employees.last_name as created_by, count(awards.id) as value from awards inner join employees on awards.created_by=employees.id group by awards.created_by;';
+  pool.query(sql, function(error, results, fields) {
+    callback(results);
+  });
+}
 /***************************************************************************
 This function checks to see if the user is currently logged in before
 allowing any routes to be accessed.  If the user is not logged in, they are
@@ -114,6 +120,31 @@ router.get('/', (req, res, next) => {
 
 router.get('/create', (req, res, next) => {
   res.status(200).render('createUser');
+});
+
+router.get('/reports', (req, res, next) => {
+  get_reports(function(data) {
+    var data2= JSON.parse(JSON.stringify(data));
+    // console.log(data2);
+    
+    res.render('reports');
+  });
+});
+
+router.get('/data', (req, res, next) => {
+  get_reports(function(data) {
+    
+    var array = [];
+    var result = JSON.parse(JSON.stringify(data));
+    // console.log(result[0]);
+    for (var i = 0; i < result.length; i++) {
+      var pair = [result[i].created_by, result[i].value];
+      array.push(pair);
+    }
+    // console.log(array);
+    console.log(result);
+    res.send(result);
+  });
 });
 
 router.get('/:id', (req, res, next) => {
