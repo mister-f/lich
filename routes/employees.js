@@ -6,8 +6,8 @@ const multer = require('multer');
 const upload = multer();
 
 const s3 = new aws.S3({
-  accessKeyId: 'AKIA3U2PXSWDTJYR4SUJ',
-  secretAccessKey: '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'
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_SECRET
 });
 
 function get_employees(callback) {
