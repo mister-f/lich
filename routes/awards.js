@@ -91,9 +91,21 @@ function send_award(callback) {
                         };
 
                         //save signature file;
-//                      var file = fs.createWriteStream('./texpdf/' + imageFile);
-//                      s3.getObject(options).createReadStream().pipe(file);
+			
+			var file = fs.createWriteStream('./texpdf/' + imageFile);
+			new Promise((resolve, reject) => {
+				s3.getObject(options).createReadStream().on('end', () => { 
+					return resolve(); 
+				}).on('error', (error) => { 
+					return reject(error); 
+				}).pipe(file)
+			});
 
+                        //s3.getObject(options).createReadStream().pipe(file).on('end', () => {
+			done(null, awardee, awardType, awardDate, email, givenBy, imageFile);
+			//	});
+		},
+		function(awardee, awardType, awardDate, email, givenBy, imageFile, done) {
 			var imgPath = '/app/texpdf/';
 			fs.writeFile('./texpdf/options.tex', '\\documentclass[12pt,a4paper]{article}\n' +
 					'\\usepackage[utf8]{inputenc}\n' +
