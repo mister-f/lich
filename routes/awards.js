@@ -115,7 +115,7 @@ function send_award(callback) {
                         });
 			done(null, imageFile, email);
                 },
-                function(imageFile, done) {
+                function(imageFile, email, done) {
                         //download signature from S3 bucket
                         var fileKey = imageFile;
                         console.log('Trying to download file', fileKey);
