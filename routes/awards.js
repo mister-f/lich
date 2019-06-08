@@ -74,39 +74,6 @@ function send_award(callback) {
                                 }
                         });
                 },
-                function(awardee, awardType, awardDate, email, givenBy, imageFile, done) {
-                        //download signature from S3 bucket
-                        var fileKey = imageFile;
-                        console.log('Trying to download file', fileKey);
-
-                        AWS.config.update(
-                        {
-                                accessKeyId: process.env.AWS_KEY,
-                                secretAccessKey: process.env.AWS_SECRET,
-                        });
-                        var s3 = new AWS.S3();
-                        var options = {
-                                Bucket    : 'certifilich',
-                                Key    : fileKey,
-                        };
-
-                        //save signature file;
-			
-			var file = fs.createWriteStream('./texpdf/' + imageFile);
-			new Promise((resolve, reject) => {
-				s3.getObject(options).createReadStream().on('end', () => {  
-				}).on('error', (error) => { 
-					return reject(error); 
-				}).pipe(file.on('finish', function(){
-					console.log('file downloaded');
-					return resolve();
-				}))
-			});
-
-                        //s3.getObject(options).createReadStream().pipe(file).on('end', () => {
-			done(null, awardee, awardType, awardDate, email, givenBy, imageFile);
-			//	});
-		},
 		function(awardee, awardType, awardDate, email, givenBy, imageFile, done) {
 			var imgPath = '/app/texpdf/';
 			fs.writeFile('./texpdf/options.tex', '\\documentclass[12pt,a4paper]{article}\n' +
@@ -148,7 +115,76 @@ function send_award(callback) {
                         });
 			done(null, imageFile, email);
                 },
-		function(imageFile, email, done) {
+                function(imageFile, done) {
+                        //download signature from S3 bucket
+                        var fileKey = imageFile;
+                        console.log('Trying to download file', fileKey);
+
+                        AWS.config.update(
+                        {
+                                accessKeyId: process.env.AWS_KEY,
+                                secretAccessKey: process.env.AWS_SECRET,
+                        });
+                        var s3 = new AWS.S3();
+                        var options = {
+                                Bucket    : 'certifilich',
+                                Key    : fileKey,
+                        };
+
+                        //save signature file;
+			
+			var file = fs.createWriteStream('./texpdf/' + imageFile);
+			s3.getObject(options).createReadStream().pipe(file.on('finish', function(){
+					console.log('file downloaded');
+					const input = fs.createReadStream('./texpdf/options.tex')
+					const output = fs.createWriteStream('./texpdf/certificate.pdf')
+                    			const pdf = latex(input);
+
+                    			pdf.pipe(output)
+                    			pdf.on('error', err => console.error(err))
+                    			pdf.on('finish', function () {
+						console.log('PDF generated!');
+						const transporter = nodemailer.createTransport(sgTransport({
+                                			auth: {
+                                        			api_user: process.env.SG_USER,
+                                        			api_key: process.env.SG_KEY
+							},
+						}));
+                        		
+						const options = {
+                                			to: email,
+                                			from: 'noreply@certifilich.com',
+                                			subject: 'You\'ve received a certificate!',
+                                			text: 'Hello,\n\n' +
+                                        		'Congratulations! You received an award! Please download the attached .pdf file to see your reward.\n',
+                                		attachments: [
+                                        	{		
+                                                	path: './texpdf/certificate.pdf'
+                                        	}]};
+                        
+						transporter.sendMail(options, function(err) {
+                                			console.log('Certificate sent.');
+                                			var path = './texpdf/'
+							imageFile = path + imageFile
+							fs.unlink(imageFile, function (err) {
+								if (err) throw err;
+								console.log(imageFile + " was deleted.");
+							})
+							var tex = path + 'options.tex'
+							fs.unlink(tex, function (err) {
+								if (err) throw err;
+								console.log("options.tex was deleted.");
+							})
+							var cert = path + 'certificate.pdf'
+							fs.unlink(cert, function (err) {
+								if (err) throw err;
+								console.log("certificate.pdf was deleted.");
+							})
+                        			});
+					});
+			}));
+			/*
+			function(imageFile, email, done) {
 		
                         const input = fs.createReadStream('./texpdf/options.tex')
 			const output = fs.createWriteStream('./texpdf/certificate.pdf')
@@ -204,7 +240,8 @@ function send_award(callback) {
                         })
 						done();
                 }
-	], function(err) {
+				*/
+		}], function(err) {
 		console.log(err);
 	});
 	callback();
