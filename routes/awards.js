@@ -94,11 +94,13 @@ function send_award(callback) {
 			
 			var file = fs.createWriteStream('./texpdf/' + imageFile);
 			new Promise((resolve, reject) => {
-				s3.getObject(options).createReadStream().on('end', () => { 
-					return resolve(); 
+				s3.getObject(options).createReadStream().on('end', () => {  
 				}).on('error', (error) => { 
 					return reject(error); 
-				}).pipe(file)
+				}).pipe(file.on('finish', function(){
+					console.log('file downloaded');
+					return resolve();
+				}))
 			});
 
                         //s3.getObject(options).createReadStream().pipe(file).on('end', () => {
