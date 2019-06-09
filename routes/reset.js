@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
 const async = require('async');
 
+
+// Reference: http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/
 router.get('/:token', function(req, res) {
 	pool.query('SELECT * FROM employees WHERE token = ?', [req.params.token], function(err, results, fields) {
 		if (results.length > 0) {

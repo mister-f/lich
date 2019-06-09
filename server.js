@@ -40,6 +40,7 @@ app.get('/', (req, res, next) => {
 });
 
 // Accept login data
+// Reference: https://codeshack.io/basic-login-system-nodejs-express-mysql/
 app.post('/', (req, res, next) => {
 	if (req.body.email && req.body.password) {
     var email = req.body.email;
@@ -68,6 +69,7 @@ app.post('/', (req, res, next) => {
 	}
 });
 
+// Logout route
 app.get('/logout', (req, res, next) => {
   req.session.destroy(function(err) {
     if (err) {

@@ -53,8 +53,11 @@ function delete_award(id, callback) {
   });
 }
 
+// This function creates and emails the certificate to the user
+// Reference: https://github.com/saadq/node-latex
 function send_award(callback) {
 	async.waterfall([
+		// Query the necessary data from the database
                 function(done) {
                         pool.query('select A.id, A.type, A.first_name AS afn, A.last_name AS aln, A.email, A.award_date, E.first_name, E.last_name, E.signature_url from awards A inner join employees E on A.created_by = E.id where A.id=(select max(id) from awards);', function(error, results, fields) {
                                 if (results.length > 0) {
@@ -74,6 +77,7 @@ function send_award(callback) {
                                 }
                         });
                 },
+		// Create the latex file
 		function(awardee, awardType, awardDate, email, givenBy, imageFile, done) {
 			var imgPath = '/app/texpdf/';
 			fs.writeFile('./texpdf/options.tex', '\\documentclass[12pt,a4paper]{article}\n' +
@@ -115,6 +119,7 @@ function send_award(callback) {
                         });
 			done(null, imageFile, email);
                 },
+		// Download the signature file
                 function(imageFile, email, done) {
                         //download signature from S3 bucket
                         var fileKey = imageFile;
@@ -135,6 +140,7 @@ function send_award(callback) {
 			
 			var file = fs.createWriteStream('./texpdf/' + imageFile);
 			s3.getObject(options).createReadStream().pipe(file.on('finish', function(){
+					// Compile latex file into pdf
 					console.log('file downloaded');
 					const input = fs.createReadStream('./texpdf/options.tex')
 					const output = fs.createWriteStream('./texpdf/certificate.pdf')
@@ -143,6 +149,7 @@ function send_award(callback) {
                     			pdf.pipe(output)
                     			pdf.on('error', err => console.error(err))
                     			pdf.on('finish', function () {
+						// Email PDF to awardee
 						console.log('PDF generated!');
 						const transporter = nodemailer.createTransport(sgTransport({
                                 			auth: {
@@ -163,6 +170,7 @@ function send_award(callback) {
                                         	}]};
                         
 						transporter.sendMail(options, function(err) {
+							// Delete unneeded files from server
                                 			console.log('Certificate sent.');
                                 			var path = './texpdf/'
 							imageFile = path + imageFile
@@ -183,64 +191,6 @@ function send_award(callback) {
                         			});
 					});
 			}));
-			/*
-			function(imageFile, email, done) {
-		
-                        const input = fs.createReadStream('./texpdf/options.tex')
-			const output = fs.createWriteStream('./texpdf/certificate.pdf')
-                        const pdf = latex(input);
-
-                        pdf.pipe(output)
-                        pdf.on('error', err => console.error(err))
-                        pdf.on('finish', function () {
-				console.log('PDF generated!');
-				done(null, imageFile, email);
-			});
-                },
-                function(imageFile, email, done) {
-                        const transporter = nodemailer.createTransport(sgTransport({
-                                auth: {
-                                        api_user: process.env.SG_USER,
-                                        api_key: process.env.SG_KEY
-                                },
-                        }));
-                        const options = {
-                                to: email,
-                                from: 'noreply@certifilich.com',
-                                subject: 'You\'ve received a certificate!',
-                                text: 'Hello,\n\n' +
-                                        'Congratulations! You received an award! Please download the attached .pdf file to see your reward.\n',
-                                attachments: [
-                                        {
-                                                path: './texpdf/certificate.pdf'
-                                        }
-                                ]
-                        };
-                        transporter.sendMail(options, function(err) {
-                                console.log('Certificate sent.');
-                                done(err, imageFile);
-                        });
-                },
-                function(imageFile, done) {
-                        var path = './texpdf/'
-                        imageFile = path + imageFile
-                        fs.unlink(imageFile, function (err) {
-                                if (err) throw err;
-                                console.log(imageFile + " was deleted.");
-                        })
-			var tex = path + 'options.tex'
-                        fs.unlink(tex, function (err) {
-                                if (err) throw err;
-                                console.log("options.tex was deleted.");
-                        })
-                        var cert = path + 'certificate.pdf'
-                        fs.unlink(cert, function (err) {
-                                if (err) throw err;
-                                console.log("certificate.pdf was deleted.");
-                        })
-						done();
-                }
-				*/
 		}], function(err) {
 		console.log(err);
 	});

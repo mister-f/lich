@@ -11,6 +11,8 @@ router.get('/', function(req, res) {
 	res.render('recover');
 });
 
+
+//Reference: http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/
 router.post('/', function(req, res, next) {
 	async.waterfall([
 		function(done) {
