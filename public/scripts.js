@@ -33,7 +33,6 @@ $(function () {
       contentType: false,
       processData: false,
       success: function() {
-        alert("Success!");
         window.location.href = '/employees';
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -73,7 +72,6 @@ $(function () {
       contentType: false,
       processData: false,
       success: function() {
-        alert("Success!");
         window.location.href = '/';
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -116,7 +114,6 @@ $('.create-btn2').on('click', function() {
       contentType: false,
       processData: false,
       success: function() {
-        alert("Success!");
         window.location.href = '/awards';
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
